@@ -4,6 +4,7 @@ import axios from 'axios'
 import { ofType } from 'redux-observable'
 import { services } from '../../components/common/constant'
 
+
 // Action-type 
 export const LOGIN_REQUEST = 'LOGIN_REQUEST'
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
@@ -28,7 +29,11 @@ export const epics = {
             switch (type) {
                 case LOGIN_REQUEST: {
                     const dataVar = payload
-                    return from(axios.post(services.baseUrl + services.login, dataVar)).pipe(
+                    return from(axios.post(services.baseUrl + services.login, dataVar, {
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    })).pipe(
                         map(response => userDetail(response)),
                         catchError(error => of(console.error(error)))
                     )
@@ -42,10 +47,15 @@ export const epics = {
             switch (type) {
                 case SIGNUP_REQUEST: {
                     const dataVar = payload
-                    return from(axios.post(services.baseUrl + services.signUp, dataVar)).pipe(
+                    console.log(services.baseUrl + services.register)
+                    return from(axios.post(services.baseUrl + services.register, dataVar, {
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    })).pipe(
                         map(response => userCreated(response)),
                         catchError(error => of(console.error(error)))
-                    )
+                    ).subscribe(response => console.log(response));
                 }
             }
         })
@@ -69,17 +79,15 @@ export default function reducer(state = initialState, action) {
                 fetchProgress: true
             }
         case LOGIN_SUCCESS:
-            if (action.payload.data.authToken) {
-                sessionStorage.setItem('authToken', action.payload.data.authToken)
-                sessionStorage.setItem('user', JSON.stringify(action.payload.data.data))
+            if (action.payload) {
+                sessionStorage.setItem('user', JSON.stringify(action.payload.data))
                 return {
                     ...state,
                     fetchProgress: false,
-                    authToken: action.payload.data.authToken,
-                    user: action.payload.data.data
+                    user: action.payload.data
                 }
             } else {
-                alert(action.payload.data.message)
+                alert(action.payload)
                 return {
                     ...state,
                     fetchProgress: false,

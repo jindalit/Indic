@@ -16,79 +16,27 @@ export default class HomeMain extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            videoList: [
-                {
-                    src: 'img/v1.png',
-                    time: '3:50',
-                    title: 'Project 1',
-                    views: '1.8M',
-                    createdOn: '11 Months ago',
-                    user: 'verified'
-                },
-                {
-                    src: 'img/v2.png',
-                    time: '3:50',
-                    title: 'Project 2',
-                    views: '1.8M',
-                    createdOn: '11 Months ago',
-                    user: 'unverified'
-                },
-                {
-                    src: 'img/v3.png',
-                    time: '3:50',
-                    title: 'Project 3',
-                    views: '1.8M',
-                    createdOn: '11 Months ago',
-                    user: 'pending'
-                },
-                {
-                    src: 'img/v4.png',
-                    time: '3:50',
-                    title: 'Project 4',
-                    views: '1.8M',
-                    createdOn: '11 Months ago',
-                    user: 'unverified'
-                },
-                {
-                    src: 'img/v5.png',
-                    time: '3:50',
-                    title: 'Project 5',
-                    views: '1.8M',
-                    createdOn: '11 Months ago',
-                    user: 'pending'
-                },
-                {
-                    src: 'img/v6.png',
-                    time: '3:50',
-                    title: 'Project 6',
-                    views: '1.8M',
-                    createdOn: '11 Months ago',
-                    user: 'verified'
-                },
-                {
-                    src: 'img/v7.png',
-                    time: '3:50',
-                    title: 'Project 7',
-                    views: '1.8M',
-                    createdOn: '11 Months ago',
-                    user: 'unverified'
-                }, {
-                    src: 'img/v8.png',
-                    time: '3:50',
-                    title: 'Project 8',
-                    views: '1.8M',
-                    createdOn: '11 Months ago',
-                    user: 'verified'
-                }
-
-            ]
+            videoList: []
         }
     }
     componentDidMount() {
         this.props.initLoadData()
 
+        axios.post(
+            services.baseUrl + services.getList,
+            {
+                "info": "YES"
+            },
+            {
+                headers: {
+                    "Content-type": "application/json",
+                },
+            }
+        )
+            .then(({ data }) => {
+                this.setState({ videoList: JSON.parse(JSON.parse(data).videoProperties) })
+            })
     }
-
     render() {
         return (
             <div>
@@ -96,7 +44,7 @@ export default class HomeMain extends React.Component {
                 <div id="wrapper">
                     <SideNav></SideNav>
                     <div id="content-wrapper">
-                        <div class="container-fluid pb-0">  
+                        <div class="container-fluid pb-0">
                             <div class="video-block section-padding">
                                 <div class="row">
                                     <div class="col-md-12">
@@ -115,14 +63,14 @@ export default class HomeMain extends React.Component {
                                         </div>
                                     </div>
 
-                                    {this.state.videoList.map(item => <VideoCard card={item} />)}
+                                    {this.state.videoList ? this.state.videoList.map(item => <VideoCard card={item} />) : ''}
 
                                 </div>
                             </div>
                         </div>
                         <Footer />
                     </div>
-                </div></div>
+                </div></div >
         )
     }
 

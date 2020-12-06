@@ -1,7 +1,15 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { Link, withRouter } from 'react-router-dom';
 
-export default class SideNav extends React.Component {
+class SideNav extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+    logOut = () => {
+        sessionStorage.removeItem('user')
+        this.props.history.push('/login')
+    }
     render() {
         return (
             <ul className="sidebar navbar-nav">
@@ -30,7 +38,7 @@ export default class SideNav extends React.Component {
                     </a>
                 </li>
                 <li className="nav-item">
-                    <a className="nav-link" href="../login.html">
+                    <a onClick={this.logOut} className="nav-link" href='javascript:void(0)'>
                         <i className="fas fa-fw fa-sign-out-alt"></i>
                         <span>Logout</span>
                     </a>
@@ -39,3 +47,5 @@ export default class SideNav extends React.Component {
         )
     }
 }
+
+export default withRouter(SideNav)

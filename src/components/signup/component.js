@@ -1,37 +1,60 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import './style.css'
 import axios from 'axios'
 import { services } from '../common/constant'
 
-export default class Signup extends React.Component {
+class Signup extends React.Component {
+
+
+
     static propTypes = {
-        signupReq: PropTypes.func.isRequired,
-        getNewUser: PropTypes.object,
-        resetSignup: PropTypes.func,
+
         fetchProgress: PropTypes.bool
     }
     constructor(props) {
         super(props);
         this.state = {
             formData: {
-                username: '',
-                password: '',
-                firstname: '',
-                lastname: '',
+                first: '',
+                last: '',
                 email: '',
-                phone: '',
-                role: '',
-                isProjectContact: true,
-                isTechContact: true
-            },
-            roles: []
+                password: '',
+                confirmPassword: ''
+            }
         }
     }
+    validation = () => {
+        const formData = this.state.formData
+        let retVal = true
+        for (let key in formData) {
+            if (formData[key] === ''){
+                retVal = false 
+                break
+            }
+        }
+        return retVal
+    }
     signupuser = (e) => {
-        this.props.signupReq(this.state.formData)
+        if (this.validation()) {
+            axios.post(services.baseUrl + services.register, this.state.formData, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(({ data }) => {
+                const msg = JSON.parse(data).message
+                alert(msg)
+                if (msg === 'Registered Successfully  !!') {
+                    this.props.history.push('/login')
+                }
+
+            })
+        }
+        else {
+            alert('Please fill all mandatory fields.')
+        }
     }
     myChangeHandler = (event) => {
         var formData = { ...this.state.formData }
@@ -39,35 +62,8 @@ export default class Signup extends React.Component {
         this.setState({ formData });
     }
 
-    componentDidUpdate() {
-        if (this.props.getNewUser && this.props.getNewUser !== '') {
-            this.props.resetSignup()
-            alert(this.props.getNewUser)
-            this.props.history.push('/login')
-        }
-    }
-    componentDidMount() {
-        axios.get(services.baseUrl + services.roles + '?authToken=' + sessionStorage.getItem('authToken')).then(response => {
-            var formData = { ...this.state.formData }
-            formData['role'] = response.data.data[0]._id
-            this.setState({ roles: response.data.data, formData: formData })
-        })
-    }
-    handleChange = (event) => {
-        var formData = { ...this.state.formData }
-        formData['role'] = event.target.value
-        this.setState({ formData });
-    }
     render() {
         const { fetchProgress } = this.props
-        const roleItems = []
-        if (this.state.roles) {
-            for (let i = 0; i < this.state.roles.length; i++) {
-                roleItems.push(
-                    <option key={'req' + i} value={this.state.roles[i]._id}>{this.state.roles[i].name}</option>
-                )
-            }
-        }
         return (
             <div id="wrapper" class="wrapper">
                 <div class="fxt-template-animation loaded fxt-template-layout13">
@@ -92,41 +88,41 @@ export default class Signup extends React.Component {
                                 <div class="fxt-content">
                                     <h2>Register</h2>
                                     <div class="fxt-form">
-                                        <form method="POST">
-                                            <div class="form-group">
-                                                <label for="f_name" class="input-label">First Name</label>
-                                                <input type="text" id="f_name" class="form-control" name="f_name" placeholder="example name" required="required" />
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="l_name" class="input-label">Last Name</label>
-                                                <input type="text" id="l_name" class="form-control" name="l_name" placeholder="example name" required="required" />
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="email" class="input-label">Email Address</label>
-                                                <input type="email" id="email" class="form-control" name="email" placeholder="demo@gmail.com" required="required" />
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="password" class="input-label">Password</label>
-                                                <input id="password" type="password" class="form-control" name="password" placeholder="********" required="required" />
-                                                <i toggle="#password" class="fa fa-fw fa-eye toggle-password field-icon"></i>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="c_password" class="input-label">Confirm Password</label>
-                                                <input id="c_password" type="password" class="form-control" name="c_password" placeholder="********" required="required" />
-                                                <i toggle="#c_password" class="fa fa-fw fa-eye toggle-password field-icon"></i>
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="fxt-checkbox-area">
-                                                    <div class="checkbox">
-                                                        <input id="checkbox1" type="checkbox" />
-                                                        <label for="checkbox1">I agree with the terms and condition</label>
-                                                    </div>
+
+                                        <div class="form-group">
+                                            <label for="f_name" class="input-label">First Name</label>
+                                            <input type="text" id="f_name" class="form-control" name="first" onChange={this.myChangeHandler} placeholder="example name" required="required" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="l_name" class="input-label">Last Name</label>
+                                            <input type="text" id="l_name" class="form-control" name="last" onChange={this.myChangeHandler} placeholder="example name" required="required" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="email" class="input-label">Email Address</label>
+                                            <input type="email" id="email" class="form-control" name="email" onChange={this.myChangeHandler} placeholder="demo@gmail.com" required="required" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="password" class="input-label">Password</label>
+                                            <input id="password" type="password" class="form-control" onChange={this.myChangeHandler} name="password" placeholder="********" required="required" />
+                                            <i toggle="#password" class="fa fa-fw fa-eye toggle-password field-icon"></i>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="c_password" class="input-label">Confirm Password</label>
+                                            <input id="c_password" type="password" class="form-control" name="confirmPassword" placeholder="********" required="required" onChange={this.myChangeHandler} />
+                                            <i toggle="#c_password" class="fa fa-fw fa-eye toggle-password field-icon"></i>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="fxt-checkbox-area">
+                                                <div class="checkbox">
+                                                    <input id="checkbox1" type="checkbox" />
+                                                    <label for="checkbox1">I agree with the terms and condition</label>
                                                 </div>
                                             </div>
-                                            <div class="form-group">
-                                                <button type="submit" class="fxt-btn-fill">Register</button>
-                                            </div>
-                                        </form>
+                                        </div>
+                                        <div class="form-group">
+                                            <button onClick={e => this.signupuser(e)} type="submit" class="fxt-btn-fill">Register</button>
+                                        </div>
+
                                     </div>
                                     <div class="text-center">
                                         <p>Have an account?<Link to="login" class="switcher-text">Log in</Link></p>
@@ -136,7 +132,10 @@ export default class Signup extends React.Component {
                         </div>
                     </div>
                 </div>
+                {fetchProgress ? <CircularProgress color="secondary" /> : ''}
             </div>
         )
     }
 }
+
+export default withRouter(Signup)

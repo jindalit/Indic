@@ -16,12 +16,16 @@ export default class Login extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            username: '',
+            email: '',
             password: ''
         }
     }
     login = (e) => {
-        this.props.loginReq(this.state)
+        if (this.state.email !== '' && this.state.password !== '') {
+            this.props.loginReq(this.state)
+        } else{
+            alert('Please enter email and password to login.')
+        }
     }
     myChangeHandler = (event) => {
         let nam = event.target.name;
@@ -29,18 +33,8 @@ export default class Login extends React.Component {
         this.setState({ [nam]: val });
     }
     componentDidUpdate() {
-        let roles = ''
         if (this.props.getUser && sessionStorage.getItem('user')) {
-            axios.get(services.baseUrl + services.roles + '?authToken=' + sessionStorage.getItem('authToken')).then(response => {
-                response.data.data.forEach(element => {
-                    if (element._id === JSON.parse(sessionStorage.getItem('user')).role) {
-                        roles = element.name
-                        this.props.setRole(roles)
-                        roles === "User" ? this.props.history.push('/') : this.props.history.push('/admin')
-                    }
-                })
-            })
-
+            this.props.history.push('/')
         }
     }
     render() {
@@ -72,29 +66,26 @@ An online platform to provide Accessible Education for differently abled.</p>
                                 <div className="fxt-content">
                                     <h2>Login Here</h2>
                                     <div className="fxt-form">
-                                        <form method="POST">
-                                            <div className="form-group">
-                                                <label for="email" className="input-label">Email Address</label>
-                                                <input type="email" id="email" className="form-control" name="email" placeholder="demo@gmail.com" required="required" />
+
+                                        <div className="form-group">
+                                            <label for="email" className="input-label">Email Address</label>
+                                            <input type="text" id="email" className="form-control" name="email" placeholder="demo@gmail.com" required="required" onChange={this.myChangeHandler} />
+                                        </div>
+                                        <div className="form-group">
+                                            <label for="password" className="input-label">Password</label>
+                                            <input id="password" type="password" className="form-control" name="password" placeholder="********" required="required" onChange={this.myChangeHandler} />
+                                            <i toggle="#password" className="fa fa-fw fa-eye toggle-password field-icon"></i>
+                                        </div>
+                                        <div className="form-group">
+                                            <div className="fxt-checkbox-area">
+
+                                                <Link to="forgotpassword" className="switcher-text">Forgot Password</Link>
                                             </div>
-                                            <div className="form-group">
-                                                <label for="password" className="input-label">Password</label>
-                                                <input id="password" type="password" className="form-control" name="password" placeholder="********" required="required" />
-                                                <i toggle="#password" className="fa fa-fw fa-eye toggle-password field-icon"></i>
-                                            </div>
-                                            <div className="form-group">
-                                                <div className="fxt-checkbox-area">
-                                                    <div className="checkbox">
-                                                        <input id="checkbox1" type="checkbox" />
-                                                        <label for="checkbox1">Keep me logged in</label>
-                                                    </div>
-                                                    <Link to="forgotpassword" className="switcher-text">Forgot Password</Link>
-                                                </div>
-                                            </div>
-                                            <div className="form-group">
-                                                <a href="dashboard/index.html" className="fxt-btn-fill logintxt">Log in</a>
-                                            </div>
-                                        </form>
+                                        </div>
+                                        <div className="form-group">
+                                            <button onClick={e => this.login(e)} className="fxt-btn-fill logintxt">Log in</button>
+                                        </div>
+
                                     </div>
                                     <div className="fxt-footer">
                                         <p>Don't have an account?<Link to="Signup" className="switcher-text">Register</Link></p>
@@ -104,6 +95,7 @@ An online platform to provide Accessible Education for differently abled.</p>
                         </div>
                     </div>
                 </section>
+                {fetchProgress ? <CircularProgress color="secondary" /> : ''}
             </div>
         )
     }
