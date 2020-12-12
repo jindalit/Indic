@@ -1,86 +1,86 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
+import axios from 'axios'
 import Header from '../../common/header'
 import Footer from '../../common/footer'
 import SideNav from '../../common/sidenav'
+import { services } from '../../common/constant'
 
 class VideoProgress extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            category: [
-                {
-                    name: 'Abaft',
-                    id: 1
-                },
-                {
-                    name: 'Brick',
-                    id: 2
-                },
-                {
-                    name: 'Purpose',
-                    id: 3
-                },
-                {
-                    name: 'Shallow',
-                    id: 4
-                }, {
-                    name: 'Spray',
-                    id: 5
-                }, {
-                    name: 'Cemetery',
-                    id: 6
-                }
-                , {
-                    name: 'Trouble',
-                    id: 7
-                }, {
-                    name: 'Pin',
-                    id: 8
-                }, {
-                    name: 'Fall',
-                    id: 9
-                }, {
-                    name: 'Leg',
-                    id: 10
-                },
-                {
-                    name: 'Abaft',
-                    id: 11
-                },
-                {
-                    name: 'Brick',
-                    id: 12
-                },
-                {
-                    name: 'Purpose',
-                    id: 13
-                },
-                {
-                    name: 'Shallow',
-                    id: 14
-                }, {
-                    name: 'Spray',
-                    id: 15
-                }, {
-                    name: 'Cemetery',
-                    id: 16
-                }
-                , {
-                    name: 'Trouble',
-                    id: 17
-                }, {
-                    name: 'Pin',
-                    id: 18
-                }, {
-                    name: 'Fall',
-                    id: 19
-                }, {
-                    name: 'Leg',
-                    id: 20
-                }
-            ]
+            selectedCategories: [],
+            certified: false,
+            formData: {
+                v_id: sessionStorage.getItem('VideoKeys'),
+                title: '',
+                description: "",
+                language: 'English',
+                privacysettings: 'Public',
+                languagemodel: 'Default',
+                tags: '',
+                category: ''
+            },
+            category: [{ name: 'Abaft', id: 1 }, { name: 'Brick', id: 2 }, { name: 'Purpose', id: 3 }, { name: 'Shallow', id: 4 }, { name: 'Spray', id: 5 }, { name: 'Cemetery', id: 6 }, { name: 'Trouble', id: 7 }, { name: 'Pin', id: 8 }, { name: 'Fall', id: 9 }, { name: 'Leg', id: 10 }, { name: 'Scissors', id: 11 }, { name: 'Stitch', id: 12 }, { name: 'Agonizing', id: 13 }, { name: 'Rescue', id: 14 }, { name: 'Quiet', id: 15 }]
         }
+    }
+    validation = () => {
+        const formData = this.state.formData
+        let retVal = true
+        for (let key in formData) {
+            if (formData[key] === '') {
+                retVal = false
+                break
+            }
+        }
+        return retVal
+    }
+    saveMeta = (e) => {
+        if (this.validation()) {
+            if(!this.state.certified) {
+                alert('Please check certificate first')
+                return
+            }
+            sessionStorage.removeItem('VideoKeys')
+            axios.post(services.baseUrl + services.saveMetadata, this.state.formData, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(({ data }) => {
+                const msg = JSON.parse(data).message
+                alert(msg)
+                if (msg === 'Record saved') {
+                    this.props.history.push('/')
+                }
+
+            })
+        }
+        else {
+            alert('Please fill all mandatory fields.')
+        }
+    }
+    myChangeHandler = (event) => {
+        var formData = { ...this.state.formData }
+        formData[event.target.name] = event.target.value
+        this.setState({ formData });
+    }
+    myCheckboxHandler = (event) => {
+        var formData = { ...this.state.formData }
+        let selectedCategories = this.state.selectedCategories
+        if (event.currentTarget.checked) {
+            if (selectedCategories.length > 5) {
+                event.preventDefault()
+                return alert('You already select 6 categories.')
+            }
+            selectedCategories.push(event.currentTarget.name)
+        }
+        else {
+            const selIndex = selectedCategories.indexOf(event.currentTarget.name)
+            selectedCategories.splice(selIndex, 1)
+        }
+        formData['category'] = selectedCategories.join()
+        this.setState({ selectedCategories, formData });
     }
     render() {
         return (
@@ -123,13 +123,13 @@ class VideoProgress extends React.Component {
                                             <div className="col-lg-12">
                                                 <div className="form-group">
                                                     <label for="e1">Video Title</label>
-                                                    <input type="text" placeholder="2020-06-20 02-31-01" id="e1" className="form-control" />
+                                                    <input type="text" placeholder="2020-06-20 02-31-01" id="e1" className="form-control" name='title' onChange={this.myChangeHandler} />
                                                 </div>
                                             </div>
                                             <div className="col-lg-12">
                                                 <div className="form-group">
                                                     <label for="e2">About</label>
-                                                    <textarea rows="3" id="e2" name="e2" className="form-control">Description</textarea>
+                                                    <textarea rows="3" id="e2" name="e2" className="form-control" name='description' onChange={this.myChangeHandler} placeholder='Description'></textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -137,31 +137,25 @@ class VideoProgress extends React.Component {
                                             <div className="col-lg-4">
                                                 <div className="form-group">
                                                     <label for="e9">Language in Video (Optional)</label>
-                                                    <select id="e9" className="custom-select">
+                                                    <select id="e9" className="custom-select" name='language' onChange={this.myChangeHandler}>
                                                         <option>English</option>
-                                                        <option>2</option>
-                                                        <option>3</option>
-                                                        <option>4</option>
-                                                        <option>5</option>
+                                                        <option>Hindi</option>
                                                     </select>
                                                 </div>
                                             </div>
                                             <div className="col-lg-4">
                                                 <div className="form-group">
                                                     <label for="e4">Privacy Settings</label>
-                                                    <select id="e4" className="custom-select">
+                                                    <select id="e4" className="custom-select" name='privacysettings' onChange={this.myChangeHandler}>
                                                         <option>Public</option>
                                                         <option>Private</option>
-                                                        <option>3</option>
-                                                        <option>4</option>
-                                                        <option>5</option>
                                                     </select>
                                                 </div>
                                             </div>
                                             <div className="col-lg-4">
                                                 <div className="form-group">
                                                     <label for="e4">Language Model</label>
-                                                    <select id="e4" className="custom-select">
+                                                    <select id="e4" className="custom-select" name='languagemodel' onChange={this.myChangeHandler}>
                                                         <option>Default</option>
                                                     </select>
                                                 </div>
@@ -173,7 +167,7 @@ class VideoProgress extends React.Component {
                                             <div className="col-lg-4">
                                                 <div className="form-group">
                                                     <label for="e7">Tags (13 Tags Remaining)</label>
-                                                    <input type="text" placeholder="Gaming, PS4" id="e7" className="form-control" />
+                                                    <input type="text" placeholder="Gaming, PS4" id="e7" className="form-control" name='tags' onChange={this.myChangeHandler} />
                                                 </div>
                                             </div>
                                         </div>
@@ -188,7 +182,7 @@ class VideoProgress extends React.Component {
                                             {
                                                 this.state.category.map(item => {
                                                     return <div className="col-lg-2 col-xs-6 col-4 custom-control custom-checkbox">
-                                                        <input type="checkbox" className="custom-control-input" id={"customCheck" + item.id} />
+                                                        <input type="checkbox" className="custom-control-input" name='category' onChange={this.myCheckboxHandler} name={item.name} id={"customCheck" + item.id} />
                                                         <label className="custom-control-label" for={"customCheck" + item.id}>{item.name}</label>
                                                     </div>
                                                 })
@@ -198,11 +192,11 @@ class VideoProgress extends React.Component {
 
                                     <hr />
                                     <div className="terms text-center">
-                                        <p className="mb-0"> <input type="checkbox" /> By checking this box, I certify that use of any facial recognition functionality in this service is not by or for a police department in the United States, and I represent that I have all rights (and individuals’ consents, where applicable) to use and store the file/data, and agree that it will be handled per the Online Services Terms and the Privacy Statement.</p>
+                                        <p className="mb-0"> <input type="checkbox" onClick={e => { this.setState({ 'certified': e.target.checked}) }} /> By checking this box, I certify that use of any facial recognition functionality in this service is not by or for a police department in the United States, and I represent that I have all rights (and individuals’ consents, where applicable) to use and store the file/data, and agree that it will be handled per the Online Services Terms and the Privacy Statement.</p>
 
                                     </div>
                                     <div className="osahan-area text-center mt-3">
-                                        <Link className="btn btn-outline-primary" to="Timeline">Save Changes</Link>
+                                        <a className="btn btn-outline-primary" onClick={this.saveMeta}>Save Changes</a>
                                     </div>
                                 </div>
                             </div>

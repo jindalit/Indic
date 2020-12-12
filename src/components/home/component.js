@@ -34,7 +34,7 @@ export default class HomeMain extends React.Component {
             }
         )
             .then(({ data }) => {
-                this.setState({ videoList: JSON.parse(JSON.parse(data).videoProperties) })
+                this.setState({ videoList: JSON.parse(data).videoProperties })
             })
     }
     render() {

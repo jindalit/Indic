@@ -14,16 +14,16 @@ class SideNav extends React.Component {
         return (
             <ul className="sidebar navbar-nav">
                 <li className="nav-item active">
-                    <a className="nav-link" href="index.html">
+                    <Link className="nav-link" to='/'>
                         <i className="fas fa-fw fa-home"></i>
                         <span>Dashboard</span>
-                    </a>
+                    </Link>
                 </li>
                 <li className="nav-item">
-                    <a className="nav-link" href="#">
+                    <Link className="nav-link" to='/upload'>
                         <i className="fas fa-fw fa-film"></i>
                         <span>Media Files</span>
-                    </a>
+                    </Link>
                 </li>
                 <li className="nav-item">
                     <a className="nav-link" href="#">
@@ -32,7 +32,7 @@ class SideNav extends React.Component {
                     </a>
                 </li>
                 <li className="nav-item">
-                    <a className="nav-link" href="settings.html">
+                    <a className="nav-link" href="#">
                         <i className="fas fa-fw fa-users-cog"></i>
                         <span>Account Settings</span>
                     </a>

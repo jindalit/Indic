@@ -30,6 +30,7 @@ const Uploadvideo = (props) => {
             )
                 .then(({ data }) => {
                     const response = JSON.parse(data)
+                    sessionStorage.setItem('VideoKeys', response.VideoKeys)
                     alert(response.message + ' with VideoKeys ' + response.VideoKeys);
                     props.history.push('/progress')
                 })
