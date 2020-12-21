@@ -15,7 +15,7 @@ export default class ForgotPassword extends React.Component {
 
     }
     myChangeHandler = (event) => {
-        debugger
+        
         this.setState({ password: event.target.value });
     }
     forgotPassword(e) {

@@ -32,7 +32,7 @@ const Uploadvideo = (props) => {
                     const response = JSON.parse(data)
                     sessionStorage.setItem('VideoKeys', response.VideoKeys)
                     alert(response.message + ' with VideoKeys ' + response.VideoKeys);
-                    props.history.push('/progress')
+                    props.history.push('/')
                 })
         }
         else if (imgFile) {
@@ -50,7 +50,7 @@ const Uploadvideo = (props) => {
                 .then(({ data }) => {
                     const response = JSON.parse(data)
                     alert(response.message + ' with VideoKey ' + response.VideoKey);
-                    props.history.push('/progress')
+                    props.history.push('/')
                 })
         }
     }
@@ -67,14 +67,14 @@ const Uploadvideo = (props) => {
 
                                 <h4 className="mt-5">Select Videos files to upload</h4>
                                 <p className="land">Select a Directory to upload multiple files...</p>
-                                <div class="mt-6" style={{ "margin-left": "180px" }}>
+                                <div className="mt-6" style={{ "margin-left": "180px" }}>
 
-                                    <div class="input-file-container js">
-                                        <input class="input-file" id="my-file" type="file" multiple={true} onChange={handleChange} />
-                                        <label tabindex="0" for="my-file" class="input-file-trigger">Browse a file...</label>
+                                    <div className="input-file-container js">
+                                        <input className="input-file" id="my-file" type="file" multiple={true} onChange={handleChange} />
+                                        <label tabindex="0" for="my-file" className="input-file-trigger">Browse a file...</label>
                                     </div>
 
-                                    <p class="file-return" style={{ "position": "absolute", "margin-top": "10px" }} ></p>
+                                    <p className="file-return" style={{ "position": "absolute", "margin-top": "10px" }} ></p>
 
                                 </div>
                                 <a className="btn btn-outline-primary" style={{ "position": "absolute", "margin-top": "-52px", "padding": "13px", "margin-left": "60px", "font-size": "1em", "font-weight": "600" }} onClick={handleSubmitFile}>Upload Video(s)</a>

@@ -40,7 +40,7 @@ export default class Login extends React.Component {
     render() {
         const { fetchProgress } = this.props
         return (
-            <div class='login'>
+            <div className='login'>
 
                 <section className="fxt-template-animation loaded fxt-template-layout13">
                     <div className="container-fluid">

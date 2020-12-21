@@ -7,5 +7,7 @@ export const services = {
     uploadMultiVideo: 'UploadMultipleVideos/',
     forgotPassword: 'forgotPasswordRetreive/',
     getList: 'GetInfo/',
-    saveMetadata: 'saveMetadata/'
+    saveMetadata: 'saveMetadata/',
+    getTranscript: 'getTranscript/',
+    updateTranscript: 'updateTranscript/'
 }

@@ -65,67 +65,67 @@ class Signup extends React.Component {
     render() {
         const { fetchProgress } = this.props
         return (
-            <div id="wrapper" class="wrapper">
-                <div class="fxt-template-animation loaded fxt-template-layout13">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-md-6 col-12 order-md-2 fxt-bg-wrap">
-                                <div class="fxt-bg-img">
-                                    <div class="fxt-header">
-                                        <div class="fxt-transformY-50 fxt-transition-delay-1">
-                                            <a href="login-13.html" class="fxt-logo"><img src="img/logo-13.png" alt="Logo" /></a>
+            <div id="wrapper" className="wrapper">
+                <div className="fxt-template-animation loaded fxt-template-layout13">
+                    <div className="container-fluid">
+                        <div className="row">
+                            <div className="col-md-6 col-12 order-md-2 fxt-bg-wrap">
+                                <div className="fxt-bg-img">
+                                    <div className="fxt-header">
+                                        <div className="fxt-transformY-50 fxt-transition-delay-1">
+                                            <a href="login-13.html" className="fxt-logo"><img src="img/logo-13.png" alt="Logo" /></a>
                                         </div>
-                                        <div class="fxt-transformY-50 fxt-transition-delay-2">
+                                        <div className="fxt-transformY-50 fxt-transition-delay-2">
                                             <h1>Welcome To Indic-AI</h1>
                                         </div>
-                                        <div class="fxt-transformY-50 fxt-transition-delay-3">
+                                        <div className="fxt-transformY-50 fxt-transition-delay-3">
                                             <p>Indic AI : Using Tech and AI for mainstreaming of differently abled An online platform to provide Accessible Education for differently abled.</p>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6 col-12 order-md-1 fxt-bg-color">
-                                <div class="fxt-content">
+                            <div className="col-md-6 col-12 order-md-1 fxt-bg-color">
+                                <div className="fxt-content">
                                     <h2>Register</h2>
-                                    <div class="fxt-form">
+                                    <div className="fxt-form">
 
-                                        <div class="form-group">
-                                            <label for="f_name" class="input-label">First Name</label>
-                                            <input type="text" id="f_name" class="form-control" name="first" onChange={this.myChangeHandler} placeholder="example name" required="required" />
+                                        <div className="form-group">
+                                            <label for="f_name" className="input-label">First Name</label>
+                                            <input type="text" id="f_name" className="form-control" name="first" onChange={this.myChangeHandler} placeholder="example name" required="required" />
                                         </div>
-                                        <div class="form-group">
-                                            <label for="l_name" class="input-label">Last Name</label>
-                                            <input type="text" id="l_name" class="form-control" name="last" onChange={this.myChangeHandler} placeholder="example name" required="required" />
+                                        <div className="form-group">
+                                            <label for="l_name" className="input-label">Last Name</label>
+                                            <input type="text" id="l_name" className="form-control" name="last" onChange={this.myChangeHandler} placeholder="example name" required="required" />
                                         </div>
-                                        <div class="form-group">
-                                            <label for="email" class="input-label">Email Address</label>
-                                            <input type="email" id="email" class="form-control" name="email" onChange={this.myChangeHandler} placeholder="demo@gmail.com" required="required" />
+                                        <div className="form-group">
+                                            <label for="email" className="input-label">Email Address</label>
+                                            <input type="email" id="email" className="form-control" name="email" onChange={this.myChangeHandler} placeholder="demo@gmail.com" required="required" />
                                         </div>
-                                        <div class="form-group">
-                                            <label for="password" class="input-label">Password</label>
-                                            <input id="password" type="password" class="form-control" onChange={this.myChangeHandler} name="password" placeholder="********" required="required" />
-                                            <i toggle="#password" class="fa fa-fw fa-eye toggle-password field-icon"></i>
+                                        <div className="form-group">
+                                            <label for="password" className="input-label">Password</label>
+                                            <input id="password" type="password" className="form-control" onChange={this.myChangeHandler} name="password" placeholder="********" required="required" />
+                                            <i toggle="#password" className="fa fa-fw fa-eye toggle-password field-icon"></i>
                                         </div>
-                                        <div class="form-group">
-                                            <label for="c_password" class="input-label">Confirm Password</label>
-                                            <input id="c_password" type="password" class="form-control" name="confirmPassword" placeholder="********" required="required" onChange={this.myChangeHandler} />
-                                            <i toggle="#c_password" class="fa fa-fw fa-eye toggle-password field-icon"></i>
+                                        <div className="form-group">
+                                            <label for="c_password" className="input-label">Confirm Password</label>
+                                            <input id="c_password" type="password" className="form-control" name="confirmPassword" placeholder="********" required="required" onChange={this.myChangeHandler} />
+                                            <i toggle="#c_password" className="fa fa-fw fa-eye toggle-password field-icon"></i>
                                         </div>
-                                        <div class="form-group">
-                                            <div class="fxt-checkbox-area">
-                                                <div class="checkbox">
+                                        <div className="form-group">
+                                            <div className="fxt-checkbox-area">
+                                                <div className="checkbox">
                                                     <input id="checkbox1" type="checkbox" />
                                                     <label for="checkbox1">I agree with the terms and condition</label>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="form-group">
-                                            <button onClick={e => this.signupuser(e)} type="submit" class="fxt-btn-fill">Register</button>
+                                        <div className="form-group">
+                                            <button onClick={e => this.signupuser(e)} type="submit" className="fxt-btn-fill">Register</button>
                                         </div>
 
                                     </div>
-                                    <div class="text-center">
-                                        <p>Have an account?<Link to="login" class="switcher-text">Log in</Link></p>
+                                    <div className="text-center">
+                                        <p>Have an account?<Link to="login" className="switcher-text">Log in</Link></p>
                                     </div>
                                 </div>
                             </div>
