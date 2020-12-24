@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
+import { differenceInDays, differenceInHours, differenceInMinutes } from 'date-fns'
 import axios from 'axios'
 import { services } from '../../common/constant'
 import Header from '../../common/header'
@@ -12,7 +13,7 @@ const Timeline = (props) => {
     const [timeLines, setTimeLines] = useState([])
     const { videoId } = useParams();
     useEffect(() => {
-        axios.post(services.baseUrl + services.getTranscript, { v_id: videoId }, {
+        axios.post(services.baseUrl + services.getTranscript, { v_id: props.video.v_id }, {
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -21,12 +22,22 @@ const Timeline = (props) => {
             setTimeLines(msg)
         })
     }, [])
-
+    const getuploadVideoTime = time => {
+        const dayDiff = differenceInDays(Date.now(), new Date((time.split(' ')[0]).replace(/:/g, '/') + ' ' + time.split(' ')[1]))
+        if (dayDiff < 1) {
+            const hourDiff = differenceInHours(Date.now(), new Date((time.split(' ')[0]).replace(/:/g, '/') + ' ' + time.split(' ')[1]).getTime())
+            if (hourDiff < 1) {
+                return differenceInMinutes(Date.now(), new Date((time.split(' ')[0]).replace(/:/g, '/') + ' ' + time.split(' ')[1]).getTime()) + ' minutes ago'
+            }
+            return hourDiff + ' hours ago'
+        }
+        return dayDiff + ' days ago'
+    }
     const saveTranscript = (e, timeline, index) => {
         if (timeLines && timeLines[index].transcript === e.target.text) {
             return
         }
-        axios.post(services.baseUrl + services.updateTranscript, { timestamp: timeline, updated_transcript: e.target.text, v_id: videoId }, {
+        axios.post(services.baseUrl + services.updateTranscript, { timestamp: timeline, updated_transcript: e.target.text, v_id: props.video.v_id }, {
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -69,7 +80,7 @@ const Timeline = (props) => {
                                             <p className="col-md-3" style={{ "marginLeft": "-15px" }}>
                                                 {props.video.privacysettings}
                                             </p>
-                                            <span className="col-md-6" style={{ "margiLeft": "150px", "marginTop": "-42px", "position": "absolute" }}>Created {props.video.upload_date}</span>
+    <span className="col-md-6" style={{ "margiLeft": "150px", "marginTop": "-42px", "position": "absolute" }}>Created {getuploadVideoTime(props.video.upload_date)}</span>
 
 
                                         </div>

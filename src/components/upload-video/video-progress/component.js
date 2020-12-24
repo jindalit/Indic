@@ -99,11 +99,11 @@ class VideoProgress extends React.Component {
                                                 <input type="checkbox" className="custom-control-input" name='deleteMakrer' value={this.state.formData.deletemarker} onChange={e => {
                                                     this.setState({
                                                         formData: {
-                                                            ...this.state.formData, deleteMakrer: e.target.checked
+                                                            ...this.state.formData, deletemarker: e.target.checked
                                                         }
                                                     })
-                                                }} name='Inactive Video' id='deleteMakrer' />
-                                                <label className="custom-control-label" for='deleteMakrer'>Inactive Video</label>
+                                                }} name='Inactive Video' id='deletemarker' />
+                                                <label className="custom-control-label" for='deletemarker'>Inactive Video</label>
                                             </div>
                                         </div>
                                         </h6>

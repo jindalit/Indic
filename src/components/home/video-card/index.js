@@ -1,17 +1,20 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
+import { differenceInDays, differenceInHours, differenceInMinutes } from 'date-fns'
 import { services } from '../../common/constant'
 
 const VideoCard = (props) => {
     const { card } = props
-    const getuploadVideoTime = time => {
-        var one_day = 1000 * 60 * 60 * 24
-        let upload_time = new Date((time.split(' ')[0]).replace(/:/g, '/')).getTime()
-        let numDays = Math.round(upload_time - new Date().getTime()) / one_day
-        if (numDays > 0) {
-            return numDays.toFixed(0)
+    const getuploadVideoTime = time => {        
+        const dayDiff = differenceInDays(Date.now(), new Date((time.split(' ')[0]).replace(/:/g, '/') + ' ' + time.split(' ')[1]))
+        if (dayDiff < 1) {
+            const hourDiff = differenceInHours(Date.now(), new Date((time.split(' ')[0]).replace(/:/g, '/') + ' ' + time.split(' ')[1]).getTime())
+            if (hourDiff < 1) {
+                return differenceInMinutes(Date.now(), new Date((time.split(' ')[0]).replace(/:/g, '/') + ' ' + time.split(' ')[1]).getTime()) + ' minutes ago'
+            }
+            return hourDiff + ' hours ago'
         }
-        // return (Math.round(upload_time - new Date().getTime()) / one_day).toFixed(0)
+        return dayDiff + ' days ago'
     }
     return (
         <div className="col-xl-3 col-sm-6 mb-3">
@@ -41,7 +44,7 @@ const VideoCard = (props) => {
                             {card.category && card.category.join()} <a title="" data-placement="top" data-toggle="tooltip" href="#" data-original-title={card.user === 'verified' ? "Verified" : "Unverified"}><i className={`fas fa-check-circle ${card.user === 'verified' ? "text-success" : card.user === 'unverified' ? "text-danger" : "text-warning"}`}></i></a>
                         </div>
                         <div className="video-view">
-                            {card.views} views &nbsp;<i className="fas fa-calendar-alt"></i> {card.upload_date} {/* {getuploadVideoTime(card.upload_date)} */}
+                            {card.views} views &nbsp;<i className="fas fa-calendar-alt"></i> {getuploadVideoTime(card.upload_date)}
                         </div>
                     </a>
                 </div>
