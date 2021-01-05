@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Link, Switch, Route } from 'react-router-dom';
 import { ProtectedRoute } from './protected.route'
 import ForgotPassword from './components/forgotpassword'
 import Home from './components/home'
+import Model from './components/model-customization'
 import Upload from './components/upload-video'
 import VideoProgress from './components/upload-video/video-progress'
 import Login from './components/login';
@@ -21,7 +22,8 @@ class App extends Component {
           <Switch>
             <Route path="/" exact component={Home} />
             <Route path="/login" component={Login} />
-            <Route path='/Signup' component={Signup} />
+            <Route path='/Signup' component={Signup} /> 
+            <Route path="/model-customization" exact component={Model} />
             <Route path='/forgotpassword' component={ForgotPassword} />
             <Route path='/upload' component={Upload} />
             <Route path='/progress' component={VideoProgress} />

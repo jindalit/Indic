@@ -92,14 +92,10 @@ const Timeline = (props) => {
                                             <div className="col-md-12">
                                                 <div className="main-title">
                                                     <div className="btn-group float-right right-action">
-                                                        <a href="#" className="right-action-link text-gray" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                            Sort by <i className="fa fa-caret-down" aria-hidden="true"></i>
-                                                        </a>
-                                                        <div className="dropdown-menu dropdown-menu-right">
-                                                            <a className="dropdown-item" href="#"><i className="fas fa-fw fa-star"></i> &nbsp; Top Rated</a>
-                                                            <a className="dropdown-item" href="#"><i className="fas fa-fw fa-signal"></i> &nbsp; Viewed</a>
-                                                            <a className="dropdown-item" href="#"><i className="fas fa-fw fa-times-circle"></i> &nbsp; Close</a>
-                                                        </div>
+													 
+                                                        <a download={props.video.v_id+'.txt'} href={services.thumbBasePath + 'transcripts/' + props.video.v_id +'/' + props.video.v_id + '.transcript'} className="right-action-link text-gray" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                            Download transcript <i class="fas fa-download"></i>
+                                                        </a>                                                        
                                                     </div>
                                                     <h6>TimeLine</h6>
                                                 </div>

@@ -10,7 +10,7 @@ class VideoProgress extends React.Component {
         super(props)
         this.state = {
             selectedCategories: [],
-            certified: false,
+            // certified: false,
             formData: {
                 v_id: this.props.video.v_id,
                 title: this.props.video.title,
@@ -38,10 +38,10 @@ class VideoProgress extends React.Component {
     }
     saveMeta = (e) => {
         if (this.validation()) {
-            if (!this.state.certified) {
+            /* if (!this.state.certified) {
                 alert('Please check certificate first')
                 return
-            }
+            } */
             axios.post(services.baseUrl + services.saveMetadata, this.state.formData, {
                 headers: {
                     'Content-Type': 'application/json'
@@ -201,10 +201,10 @@ class VideoProgress extends React.Component {
                                     </div>
 
                                     <hr />
-                                    <div className="terms text-center">
+                                   {/*  <div className="terms text-center">
                                         <p className="mb-0"> <input type="checkbox" onClick={e => { this.setState({ 'certified': e.target.checked }) }} /> By checking this box, I certify that use of any facial recognition functionality in this service is not by or for a police department in the United States, and I represent that I have all rights (and individuals’ consents, where applicable) to use and store the file/data, and agree that it will be handled per the Online Services Terms and the Privacy Statement.</p>
 
-                                    </div>
+                                    </div> */}
                                     <div className="osahan-area text-center mt-3">
                                         <a className="btn btn-outline-primary" onClick={this.saveMeta}>Save Changes</a>
                                     </div>

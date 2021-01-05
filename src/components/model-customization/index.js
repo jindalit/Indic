@@ -6,7 +6,7 @@ import SideNav from '../common/sidenav'
 import { services } from '../common/constant'
 import Loader from '../common/loader'
 import axios from 'axios'
-import './style.css'
+import '../upload-video/style.css'
 const Uploadvideo = props => {
   const [showLoader, setShowLoader] = useState(false)
   const [imgFile, setImgFile] = useState()
@@ -69,7 +69,7 @@ const Uploadvideo = props => {
                   style={{ 'font-size': '175px;' }}
                 ></i>
 
-                <h4 className='mt-5'>Select Videos files to upload</h4>
+                <h4 className='mt-5'>Select model files to upload</h4>
                 <p className='land'>
                   Select a Directory to upload multiple files...
                 </p>
@@ -108,7 +108,7 @@ const Uploadvideo = props => {
                   }}
                   onClick={handleSubmitFile}
                 >
-                  Upload Video(s)
+                  Upload Model Files(s)
                 </a>
               </div>
             </div>

@@ -26,10 +26,10 @@ class SideNav extends React.Component {
                     </Link>
                 </li>
                 <li className="nav-item">
-                    <a className="nav-link" href="#">
+                    <Link className="nav-link" to="/model-customization">
                         <i className="fas fa-fw fa-sliders-h"></i>
                         <span>Model Customization</span>
-                    </a>
+                    </Link>
                 </li>
                 <li className="nav-item">
                     <a className="nav-link" href="#">
