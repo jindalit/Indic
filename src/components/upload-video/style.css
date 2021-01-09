@@ -67,3 +67,29 @@ h4.mt-5 {
   left: 0;
   z-index: 9999;
 }
+.form-control.search-for {
+  padding: 0;
+  width: 100px !important;
+}
+.pagination {
+  margin: 0 45% 20px;
+}
+.no-result{
+  font-size: 2em;
+  margin: 200px auto;
+  color: #f5234a;
+  text-align: center;
+}
+.pagination span a.active {
+  background: gray;
+  color: black;
+}
+.pagination span a {
+  width: 60px;
+  text-align: center;
+  background: #764ac8;
+  padding: 2px 0px;
+  display: inline-block;
+  margin: 0 1px;
+  font-size: 2em;
+}

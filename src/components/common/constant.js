@@ -6,8 +6,10 @@ export const services = {
     uploadVideo: 'UploadVideo/',
     uploadMultiVideo: 'UploadMultipleVideos/',
     forgotPassword: 'forgotPasswordRetreive/',
-    getList: 'GetInfo/',
+    getList: 'GetInfoPaginated/',
+    getTotalRecord: 'getTotalRecordsCount/',
     saveMetadata: 'saveMetadata/',
     getTranscript: 'getTranscript/',
-    updateTranscript: 'updateTranscript/'
+    updateTranscript: 'updateTranscript/',
+    searchRecord: 'searchRecord/'
 }

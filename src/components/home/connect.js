@@ -1,9 +1,10 @@
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
-import { initLoadData, getInitData, setVideo } from '../../state/home'
+import { initLoadData, getInitData, setVideo, getSearchResult } from '../../state/home'
 
 export const mapStateToProps = createStructuredSelector({
-    getInitData: getInitData
+    getInitData: getInitData,
+    searchResult: getSearchResult
 })
 
 const mapDispatchToProps = dispatch => ({
