@@ -63,7 +63,7 @@ export default class HomeMain extends React.Component {
         services.baseUrl + services.getList,
         {
           params: {
-            page_number: pageNum,
+            page_number: (pageNum * this.state.pageSize),
             page_size: this.state.pageSize
           }
         },
