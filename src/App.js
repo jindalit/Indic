@@ -30,7 +30,7 @@ class App extends Component {
             <Route path="/timeline" component={Timeline} />
 
             <Route path="*">
-              No Match
+              No Match 
             </Route>
           </Switch>
         </Router>
